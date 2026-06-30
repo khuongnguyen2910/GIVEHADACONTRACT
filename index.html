@@ -99,6 +99,34 @@
     background:var(--blue-soft);color:var(--blue);margin-left:6px;
   }
   footer{text-align:center;font-size:12px;color:var(--muted);margin-top:24px;}
+
+  .overlay{
+    display:none;position:fixed;inset:0;background:rgba(19,33,59,.55);
+    align-items:center;justify-content:center;padding:20px;z-index:50;
+  }
+  .overlay.show{display:flex;}
+  .confirm-card{
+    background:#fff;border-radius:var(--radius);padding:24px;max-width:520px;width:100%;
+    max-height:85vh;overflow-y:auto;
+  }
+  .confirm-card h3{margin:0 0 6px;font-size:17px;color:var(--navy);}
+  .confirm-row{
+    display:flex;justify-content:space-between;gap:16px;padding:8px 0;border-bottom:1px solid var(--line);
+    font-size:13.5px;
+  }
+  .confirm-row .k{color:var(--muted);flex:none;width:42%;}
+  .confirm-row .v{font-weight:600;text-align:right;word-break:break-word;}
+  .confirm-section-title{
+    font-size:11.5px;font-weight:700;letter-spacing:.04em;color:var(--gold);text-transform:uppercase;
+    margin:16px 0 4px;
+  }
+  .confirm-section-title:first-child{margin-top:0;}
+  .confirm-actions{display:flex;gap:10px;margin-top:20px;}
+  .btn-secondary{
+    flex:1;padding:13px;border-radius:11px;border:1px solid var(--line);background:#fff;
+    color:var(--navy);font-weight:700;font-size:14px;cursor:pointer;
+  }
+  .confirm-actions .submit-btn{flex:1;}
 </style>
 </head>
 <body>
@@ -152,43 +180,43 @@
           </div>
           <div class="field">
             <label>Họ và tên</label>
-            <input type="text" id="HO_TEN" placeholder="Nguyễn Văn A">
+            <input type="text" id="HO_TEN" placeholder="Nguyễn Văn A" required>
           </div>
         </div>
         <div class="grid">
           <div class="field">
             <label>Số CCCD / Hộ chiếu</label>
-            <input type="text" id="SO_CCCD">
+            <input type="text" id="SO_CCCD" required pattern="[0-9]{12}" maxlength="12" inputmode="numeric" title="Số CCCD gồm đúng 12 chữ số">
           </div>
           <div class="field">
             <label>Ngày cấp</label>
-            <input type="date" id="NGAY_CAP_CCCD_RAW">
+            <input type="date" id="NGAY_CAP_CCCD_RAW" required>
           </div>
         </div>
         <div class="field full">
           <label>Nơi cấp</label>
-          <input type="text" id="NOI_CAP_CCCD" placeholder="Cục Cảnh sát QLHC về TTXH">
+          <input type="text" id="NOI_CAP_CCCD" placeholder="Cục Cảnh sát QLHC về TTXH" required>
         </div>
         <div class="field full">
           <label>Quốc tịch</label>
-          <input type="text" id="QUOC_TICH" value="Việt Nam">
+          <input type="text" id="QUOC_TICH" value="Việt Nam" required>
         </div>
         <div class="field full">
           <label>Địa chỉ thường trú</label>
-          <input type="text" id="DIA_CHI_THUONG_TRU">
+          <input type="text" id="DIA_CHI_THUONG_TRU" required>
         </div>
         <div class="field full">
           <label>Địa chỉ liên lạc</label>
-          <input type="text" id="DIA_CHI_LIEN_LAC">
+          <input type="text" id="DIA_CHI_LIEN_LAC" required>
         </div>
         <div class="grid">
           <div class="field">
             <label>Số điện thoại</label>
-            <input type="tel" id="SO_DIEN_THOAI_CN">
+            <input type="tel" id="SO_DIEN_THOAI_CN" required>
           </div>
           <div class="field">
             <label>Email <span class="opt">(nhận hợp đồng)</span></label>
-            <input type="email" id="EMAIL_CN">
+            <input type="email" id="EMAIL_CN" required>
           </div>
         </div>
       </div>
@@ -197,39 +225,39 @@
       <div class="type-section active" id="section-HKD">
         <div class="field full">
           <label>Tên Hộ Kinh Doanh</label>
-          <input type="text" id="TEN_HKD" placeholder="Hộ Kinh Doanh Cửa Hàng ...">
+          <input type="text" id="TEN_HKD" placeholder="Hộ Kinh Doanh Cửa Hàng ..." required>
         </div>
         <div class="grid">
           <div class="field">
             <label>Số giấy chứng nhận HKD</label>
-            <input type="text" id="SO_GCN_HKD">
+            <input type="text" id="SO_GCN_HKD" required>
           </div>
           <div class="field">
             <label>Ngày cấp</label>
-            <input type="date" id="NGAY_CAP_HKD_RAW">
+            <input type="date" id="NGAY_CAP_HKD_RAW" required>
           </div>
         </div>
         <div class="field full">
           <label>Nơi cấp</label>
-          <input type="text" id="NOI_CAP_HKD" placeholder="Ủy ban Nhân dân Quận ...">
+          <input type="text" id="NOI_CAP_HKD" placeholder="Ủy ban Nhân dân Quận ..." required>
         </div>
         <div class="field full">
           <label>Địa chỉ Hộ Kinh Doanh</label>
-          <input type="text" id="DIA_CHI_HKD">
+          <input type="text" id="DIA_CHI_HKD" required>
         </div>
         <div class="grid">
           <div class="field">
-            <label>Người đại diện</label>
-            <input type="text" id="NGUOI_DAI_DIEN_HKD">
+            <label>Chủ hộ kinh doanh</label>
+            <input type="text" id="NGUOI_DAI_DIEN_HKD" required>
           </div>
           <div class="field">
             <label>Số điện thoại</label>
-            <input type="tel" id="SO_DIEN_THOAI_HKD">
+            <input type="tel" id="SO_DIEN_THOAI_HKD" required>
           </div>
         </div>
         <div class="field full">
           <label>Email <span class="opt">(nhận hợp đồng)</span></label>
-          <input type="email" id="EMAIL_HKD">
+          <input type="email" id="EMAIL_HKD" required>
         </div>
       </div>
 
@@ -237,34 +265,34 @@
       <div class="type-section" id="section-CONGTY">
         <div class="field full">
           <label>Tên công ty</label>
-          <input type="text" id="TEN_CONG_TY" placeholder="CÔNG TY TNHH ...">
+          <input type="text" id="TEN_CONG_TY" placeholder="CÔNG TY TNHH ..." required>
         </div>
         <div class="grid">
           <div class="field">
-            <label>Số giấy phép kinh doanh</label>
-            <input type="text" id="SO_GPKD">
+            <label>Mã số thuế (MST)</label>
+            <input type="text" id="SO_GPKD" required pattern="[0-9]{10}" maxlength="10" inputmode="numeric" title="MST gồm đúng 10 chữ số">
           </div>
           <div class="field">
             <label>Sở tài chính tỉnh/thành</label>
-            <input type="text" id="TINH_CAP_GPKD" placeholder="Hồ Chí Minh">
+            <input type="text" id="TINH_CAP_GPKD" placeholder="Hồ Chí Minh" required>
           </div>
         </div>
         <div class="field full">
           <label>Ngày cấp lần đầu</label>
-          <input type="date" id="NGAY_CAP_GPKD_RAW">
+          <input type="date" id="NGAY_CAP_GPKD_RAW" required>
         </div>
         <div class="field full">
           <label>Địa chỉ đăng ký</label>
-          <input type="text" id="DIA_CHI_CONG_TY">
+          <input type="text" id="DIA_CHI_CONG_TY" required>
         </div>
         <div class="grid">
           <div class="field">
             <label>Người đại diện</label>
-            <input type="text" id="NGUOI_DAI_DIEN_CT">
+            <input type="text" id="NGUOI_DAI_DIEN_CT" required>
           </div>
           <div class="field">
             <label>Chức vụ</label>
-            <input type="text" id="CHUC_VU_DAI_DIEN_CT" placeholder="Giám đốc">
+            <input type="text" id="CHUC_VU_DAI_DIEN_CT" placeholder="Giám đốc" required>
           </div>
         </div>
       </div>
@@ -314,8 +342,20 @@
       </div>
     </div>
 
-    <button type="submit" class="submit-btn" id="submitBtn">Đăng Ký & Nhận Hợp Đồng Qua Email</button>
+    <button type="submit" class="submit-btn" id="submitBtn">Xem Lại & Đăng Ký</button>
   </form>
+
+  <div id="confirmOverlay" class="overlay">
+    <div class="confirm-card">
+      <h3>Kiểm tra lại thông tin trước khi gửi</h3>
+      <p class="hint" style="margin-bottom:14px;">Vui lòng đối chiếu kỹ, sau khi xác nhận hệ thống sẽ tạo hợp đồng theo đúng dữ liệu này.</p>
+      <div id="confirmBody"></div>
+      <div class="confirm-actions">
+        <button type="button" class="btn-secondary" id="backToEditBtn">Quay Lại Chỉnh Sửa</button>
+        <button type="button" class="submit-btn" id="confirmSendBtn">Xác Nhận & Gửi</button>
+      </div>
+    </div>
+  </div>
 
   <footer>GIVEHADA · H2Y International Trading &amp; Investment JSC</footer>
 </div>
@@ -376,34 +416,11 @@ document.getElementById('sameAsAbove').addEventListener('change', (e) => {
   }
 });
 
-function showNotice(type, title, msg, downloadInfo) {
+function showNotice(type, title, msg) {
   const el = document.getElementById('notice');
   el.className = 'notice show ' + type;
-  let html = '<b>' + title + '</b>' + msg;
-  if (downloadInfo) {
-    html += '<div style="margin-top:10px"><button type="button" id="downloadBtn" class="submit-btn" style="padding:11px;font-size:13.5px">Tải Hợp Đồng Về Máy</button></div>';
-  }
-  el.innerHTML = html;
+  el.innerHTML = '<b>' + title + '</b>' + msg;
   el.scrollIntoView({behavior:'smooth', block:'center'});
-  if (downloadInfo) {
-    document.getElementById('downloadBtn').addEventListener('click', () => downloadDocx(downloadInfo.base64, downloadInfo.fileName));
-  }
-}
-
-function downloadDocx(base64, fileName) {
-  const byteChars = atob(base64);
-  const byteNumbers = new Array(byteChars.length);
-  for (let i = 0; i < byteChars.length; i++) byteNumbers[i] = byteChars.charCodeAt(i);
-  const byteArray = new Uint8Array(byteNumbers);
-  const blob = new Blob([byteArray], {type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = fileName || 'hop_dong.docx';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
 }
 
 function ddmmyyyy(val) {
@@ -417,13 +434,65 @@ function fieldVal(id) {
   return el ? el.value.trim() : '';
 }
 
-document.getElementById('contractForm').addEventListener('submit', async function (e) {
-  e.preventDefault();
-  const btn = document.getElementById('submitBtn');
-  btn.disabled = true;
-  btn.textContent = 'Đang xử lý...';
+const FIELD_LABELS = {
+  MASTER: {title: 'Ngày trở thành Master', keys: {
+    MASTER_NGAY: 'Ngày', MASTER_THANG: 'Tháng', MASTER_NAM: 'Năm'
+  }},
+  CANHAN: {title: 'Thông tin cá nhân', keys: {
+    DANH_XUNG: 'Danh xưng', HO_TEN: 'Họ và tên', SO_CCCD: 'Số CCCD/Hộ chiếu',
+    NOI_CAP_CCCD: 'Nơi cấp', NGAY_CAP_CCCD: 'Ngày cấp', QUOC_TICH: 'Quốc tịch',
+    DIA_CHI_THUONG_TRU: 'Địa chỉ thường trú', DIA_CHI_LIEN_LAC: 'Địa chỉ liên lạc',
+    SO_DIEN_THOAI_CN: 'Số điện thoại', EMAIL_CN: 'Email'
+  }},
+  HKD: {title: 'Thông tin Hộ Kinh Doanh', keys: {
+    TEN_HKD: 'Tên Hộ Kinh Doanh', SO_GCN_HKD: 'Số giấy chứng nhận HKD',
+    NOI_CAP_HKD: 'Nơi cấp', NGAY_CAP_HKD: 'Ngày cấp', DIA_CHI_HKD: 'Địa chỉ',
+    NGUOI_DAI_DIEN_HKD: 'Chủ hộ kinh doanh', SO_DIEN_THOAI_HKD: 'Số điện thoại', EMAIL_HKD: 'Email'
+  }},
+  CONGTY: {title: 'Thông tin công ty', keys: {
+    TEN_CONG_TY: 'Tên công ty', SO_GPKD: 'Mã số thuế (MST)', TINH_CAP_GPKD: 'Sở tài chính tỉnh/thành',
+    NGAY_CAP_GPKD: 'Ngày cấp', THANG_CAP_GPKD: 'Tháng cấp', NAM_CAP_GPKD: 'Năm cấp',
+    DIA_CHI_CONG_TY: 'Địa chỉ đăng ký', NGUOI_DAI_DIEN_CT: 'Người đại diện', CHUC_VU_DAI_DIEN_CT: 'Chức vụ'
+  }},
+  PAYMENT: {title: 'Thông tin thanh toán', keys: {
+    TEN_TK: 'Tên tài khoản', SO_TK: 'Số tài khoản', NGAN_HANG: 'Ngân hàng'
+  }},
+  DELIVERY: {title: 'Thông tin nhận văn bản', keys: {
+    DIA_CHI_NHAN_VB: 'Địa chỉ', EMAIL_NHAN_VB: 'Email', NGUOI_NHAN_VB: 'Người nhận', CHUC_VU_NHAN_VB: 'Chức vụ'
+  }}
+};
 
-  // Ngày trở thành Master, dùng để chọn mẫu trước/sau 01/04/2026
+function buildConfirmHTML(data, period) {
+  const typeLabel = typeLabels[currentType];
+  const periodLabel = period === 'SAU' ? 'Sau 01/04/2026' : 'Trước 01/04/2026';
+  let html = '<div class="confirm-row"><span class="k">Loại đối tác</span><span class="v">' + typeLabel + '</span></div>';
+  html += '<div class="confirm-row"><span class="k">Mẫu hợp đồng áp dụng</span><span class="v">' + periodLabel + '</span></div>';
+
+  const groups = ['MASTER', currentType, 'PAYMENT', 'DELIVERY'];
+  groups.forEach(function (g) {
+    const group = FIELD_LABELS[g];
+    if (!group) return;
+    html += '<div class="confirm-section-title">' + group.title + '</div>';
+    Object.keys(group.keys).forEach(function (key) {
+      const val = data[key];
+      if (val === undefined || val === '') return;
+      html += '<div class="confirm-row"><span class="k">' + group.keys[key] + '</span><span class="v">' + escapeForDisplay_(String(val)) + '</span></div>';
+    });
+  });
+  return html;
+}
+
+function escapeForDisplay_(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+let pendingData = null;
+
+document.getElementById('contractForm').addEventListener('submit', function (e) {
+  e.preventDefault();
+
   const mN = fieldVal('MASTER_NGAY'), mT = fieldVal('MASTER_THANG'), mY = fieldVal('MASTER_NAM');
   const masterDate = mY + '-' + String(mT).padStart(2,'0') + '-' + String(mN).padStart(2,'0');
   const period = masterDate >= CUTOFF_DATE ? 'SAU' : 'TRUOC';
@@ -432,7 +501,6 @@ document.getElementById('contractForm').addEventListener('submit', async functio
     LOAI_DOI_TAC: currentType,
     PERIOD: period,
     MASTER_NGAY: mN, MASTER_THANG: mT, MASTER_NAM: mY,
-    // Ngày ký hợp đồng = hôm nay
     NGAY: today.getDate(), THANG: today.getMonth() + 1, NAM: today.getFullYear(),
     TEN_TK: fieldVal('TEN_TK'), SO_TK: fieldVal('SO_TK'), NGAN_HANG: fieldVal('NGAN_HANG'),
     DIA_CHI_NHAN_VB: fieldVal('DIA_CHI_NHAN_VB'), EMAIL_NHAN_VB: fieldVal('EMAIL_NHAN_VB'),
@@ -475,12 +543,32 @@ document.getElementById('contractForm').addEventListener('submit', async functio
   }
   data.EMAIL_GUI = sendToEmail;
 
+  pendingData = {data: data, sendToEmail: sendToEmail, period: period};
+  document.getElementById('confirmBody').innerHTML = buildConfirmHTML(data, period);
+  document.getElementById('confirmOverlay').classList.add('show');
+  document.getElementById('submitBtn').disabled = true;
+});
+
+document.getElementById('backToEditBtn').addEventListener('click', function () {
+  document.getElementById('confirmOverlay').classList.remove('show');
+  document.getElementById('submitBtn').disabled = false;
+});
+
+document.getElementById('confirmSendBtn').addEventListener('click', async function () {
+  if (!pendingData) return;
+  const { data, sendToEmail, period } = pendingData;
+  const overlay = document.getElementById('confirmOverlay');
+  const confirmBtn = this;
+  const btn = document.getElementById('submitBtn');
+
   if (ENDPOINT_URL.includes('PASTE_')) {
+    overlay.classList.remove('show');
     showNotice('err', 'Chưa cấu hình hệ thống', 'Cần dán URL Web App của Apps Script vào biến ENDPOINT_URL trong file này.');
-    btn.disabled = false;
-    btn.textContent = 'Đăng Ký & Nhận Hợp Đồng Qua Email';
     return;
   }
+
+  confirmBtn.disabled = true;
+  confirmBtn.textContent = 'Đang xử lý...';
 
   try {
     const res = await fetch(ENDPOINT_URL, {
@@ -489,12 +577,11 @@ document.getElementById('contractForm').addEventListener('submit', async functio
       body: JSON.stringify(data)
     });
     const result = await res.json();
+    overlay.classList.remove('show');
     if (result.success) {
       showNotice('ok', 'Đăng ký thành công, số hợp đồng ' + result.so_hd,
-        'Hợp đồng đã được gửi tới email ' + sendToEmail + ' (mẫu ' + (period === 'SAU' ? 'sau' : 'trước') + ' 01/04/2026), anh/chị cũng có thể tải file về máy ngay bên dưới.',
-        {base64: result.file_base64, fileName: result.file_name});
-      downloadDocx(result.file_base64, result.file_name);
-      this.reset();
+        'Hợp đồng của anh/chị đã được ghi nhận, đội ngũ GIVEHADA sẽ gửi hợp đồng qua email ' + sendToEmail + ' trong thời gian sớm nhất.');
+      document.getElementById('contractForm').reset();
       document.getElementById('MASTER_NGAY').value = today.getDate();
       document.getElementById('MASTER_THANG').value = today.getMonth() + 1;
       document.getElementById('MASTER_NAM').value = today.getFullYear();
@@ -502,10 +589,12 @@ document.getElementById('contractForm').addEventListener('submit', async functio
       showNotice('err', 'Có lỗi xảy ra', result.message || 'Vui lòng thử lại hoặc liên hệ đội ngũ GIVEHADA.');
     }
   } catch (err) {
+    overlay.classList.remove('show');
     showNotice('err', 'Không gửi được dữ liệu', 'Kiểm tra kết nối mạng và thử lại. Chi tiết: ' + err.message);
   }
+  confirmBtn.disabled = false;
+  confirmBtn.textContent = 'Xác Nhận & Gửi';
   btn.disabled = false;
-  btn.textContent = 'Đăng Ký & Nhận Hợp Đồng Qua Email';
 });
 </script>
 </body>
