@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Đăng ký Hợp Đồng Hợp Tác - GIVEHADA</title>
+<style>
+  :root{
+    --navy:#13213B;
+    --navy-soft:#1E3258;
+    --blue:#2D5BFF;
+    --blue-soft:#EEF2FF;
+    --gold:#B68A35;
+    --ink:#1A1A1A;
+    --muted:#6B7280;
+    --line:#E4E7EC;
+    --bg:#F5F6F8;
+    --ok-bg:#ECFDF3;
+    --ok-line:#A6F4C5;
+    --ok-ink:#067647;
+    --err-bg:#FEF3F2;
+    --err-line:#FDA29B;
+    --err-ink:#B42318;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    padding:32px 16px 80px;
+  }
+  .wrap{max-width:640px;margin:0 auto;}
+  header{margin-bottom:28px;text-align:center;}
+  header .brand{
+    font-size:13px;letter-spacing:.14em;font-weight:700;color:var(--gold);
+    text-transform:uppercase;margin-bottom:6px;
+  }
+  header h1{font-size:22px;margin:0 0 6px;color:var(--navy);}
+  header p{margin:0;color:var(--muted);font-size:14px;}
+
+  .card{
+    background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+    padding:22px 22px 24px;margin-bottom:18px;
+    box-shadow:0 1px 2px rgba(16,24,40,.04);
+  }
+  .card h2{
+    display:flex;align-items:center;gap:10px;
+    font-size:15px;margin:0 0 18px;color:var(--navy);
+  }
+  .num{
+    width:24px;height:24px;border-radius:50%;background:var(--blue-soft);color:var(--blue);
+    font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:none;
+  }
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .grid.three{grid-template-columns:1fr 1fr 1fr;}
+  .field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;}
+  .field.full{grid-column:1/-1;}
+  label{font-size:11.5px;font-weight:700;letter-spacing:.04em;color:#475467;text-transform:uppercase;}
+  label .opt{font-weight:400;text-transform:none;color:var(--muted);}
+  input, select{
+    border:1px solid var(--line);border-radius:9px;padding:10px 12px;font-size:14.5px;
+    font-family:inherit;color:var(--ink);background:#fff;width:100%;
+  }
+  input:focus, select:focus{outline:2px solid var(--blue);outline-offset:1px;border-color:var(--blue);}
+  .toggle-row{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);margin-bottom:14px;cursor:pointer;}
+  .toggle-row input{width:16px;height:16px;}
+
+  .type-tabs{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:20px;}
+  .type-tab{
+    border:1px solid var(--line);border-radius:11px;padding:14px 8px;text-align:center;
+    cursor:pointer;background:#fff;font-size:13px;font-weight:600;color:#475467;
+    transition:all .12s ease;
+  }
+  .type-tab .ic{font-size:20px;display:block;margin-bottom:6px;}
+  .type-tab.active{border-color:var(--blue);background:var(--blue-soft);color:var(--blue);}
+
+  .type-section{display:none;}
+  .type-section.active{display:block;}
+
+  .submit-btn{
+    width:100%;padding:15px;border:none;border-radius:11px;
+    background:var(--navy);color:#fff;font-size:15px;font-weight:700;
+    cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;
+  }
+  .submit-btn:hover{background:var(--navy-soft);}
+  .submit-btn:disabled{opacity:.6;cursor:not-allowed;}
+
+  .notice{border-radius:11px;padding:14px 16px;font-size:14px;margin-bottom:18px;display:none;}
+  .notice.show{display:block;}
+  .notice.ok{background:var(--ok-bg);border:1px solid var(--ok-line);color:var(--ok-ink);}
+  .notice.err{background:var(--err-bg);border:1px solid var(--err-line);color:var(--err-ink);}
+  .notice b{display:block;margin-bottom:2px;}
+
+  .hint{font-size:12px;color:var(--muted);margin-top:-6px;margin-bottom:16px;}
+  .badge{
+    display:inline-block;font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:99px;
+    background:var(--blue-soft);color:var(--blue);margin-left:6px;
+  }
+  footer{text-align:center;font-size:12px;color:var(--muted);margin-top:24px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">GIVEHADA · H2Y</div>
+    <h1>Đăng Ký Hợp Đồng Hợp Tác</h1>
+    <p>Dành cho Master ký lại hợp đồng theo chính sách hiện hành</p>
+  </header>
+
+  <div id="notice" class="notice"></div>
+
+  <form id="contractForm">
+
+    <div class="card">
+      <h2><span class="num">1</span>Ngày trở thành Master</h2>
+      <div class="grid three">
+        <div class="field">
+          <label>Ngày</label>
+          <input type="number" id="MASTER_NGAY" min="1" max="31" required>
+        </div>
+        <div class="field">
+          <label>Tháng</label>
+          <input type="number" id="MASTER_THANG" min="1" max="12" required>
+        </div>
+        <div class="field">
+          <label>Năm</label>
+          <input type="number" id="MASTER_NAM" required>
+        </div>
+      </div>
+      <div class="hint" id="versionHint">Ngày này dùng để xác định mẫu hợp đồng áp dụng theo đúng chính sách tại thời điểm anh/chị trở thành Master.</div>
+    </div>
+
+    <div class="card">
+      <h2><span class="num">2</span>Loại đối tác <span class="badge" id="typeBadge"></span></h2>
+      <div class="type-tabs">
+        <div class="type-tab" data-type="CONGTY"><span class="ic">&#127970;</span>Doanh Nghiệp</div>
+        <div class="type-tab" data-type="CANHAN"><span class="ic">&#128100;</span>Cá Nhân</div>
+        <div class="type-tab active" data-type="HKD"><span class="ic">&#127968;</span>Hộ Kinh Doanh</div>
+      </div>
+
+      <!-- ===== CÁ NHÂN ===== -->
+      <div class="type-section" id="section-CANHAN">
+        <div class="grid">
+          <div class="field">
+            <label>Danh xưng</label>
+            <select id="DANH_XUNG">
+              <option value="Ông">Ông</option>
+              <option value="Bà">Bà</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Họ và tên</label>
+            <input type="text" id="HO_TEN" placeholder="Nguyễn Văn A">
+          </div>
+        </div>
+        <div class="grid">
+          <div class="field">
+            <label>Số CCCD / Hộ chiếu</label>
+            <input type="text" id="SO_CCCD">
+          </div>
+          <div class="field">
+            <label>Ngày cấp</label>
+            <input type="date" id="NGAY_CAP_CCCD_RAW">
+          </div>
+        </div>
+        <div class="field full">
+          <label>Nơi cấp</label>
+          <input type="text" id="NOI_CAP_CCCD" placeholder="Cục Cảnh sát QLHC về TTXH">
+        </div>
+        <div class="field full">
+          <label>Quốc tịch</label>
+          <input type="text" id="QUOC_TICH" value="Việt Nam">
+        </div>
+        <div class="field full">
+          <label>Địa chỉ thường trú</label>
+          <input type="text" id="DIA_CHI_THUONG_TRU">
+        </div>
+        <div class="field full">
+          <label>Địa chỉ liên lạc</label>
+          <input type="text" id="DIA_CHI_LIEN_LAC">
+        </div>
+        <div class="grid">
+          <div class="field">
+            <label>Số điện thoại</label>
+            <input type="tel" id="SO_DIEN_THOAI_CN">
+          </div>
+          <div class="field">
+            <label>Email <span class="opt">(nhận hợp đồng)</span></label>
+            <input type="email" id="EMAIL_CN">
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== HỘ KINH DOANH ===== -->
+      <div class="type-section active" id="section-HKD">
+        <div class="field full">
+          <label>Tên Hộ Kinh Doanh</label>
+          <input type="text" id="TEN_HKD" placeholder="Hộ Kinh Doanh Cửa Hàng ...">
+        </div>
+        <div class="grid">
+          <div class="field">
+            <label>Số giấy chứng nhận HKD</label>
+            <input type="text" id="SO_GCN_HKD">
+          </div>
+          <div class="field">
+            <label>Ngày cấp</label>
+            <input type="date" id="NGAY_CAP_HKD_RAW">
+          </div>
+        </div>
+        <div class="field full">
+          <label>Nơi cấp</label>
+          <input type="text" id="NOI_CAP_HKD" placeholder="Ủy ban Nhân dân Quận ...">
+        </div>
+        <div class="field full">
+          <label>Địa chỉ Hộ Kinh Doanh</label>
+          <input type="text" id="DIA_CHI_HKD">
+        </div>
+        <div class="grid">
+          <div class="field">
+            <label>Người đại diện</label>
+            <input type="text" id="NGUOI_DAI_DIEN_HKD">
+          </div>
+          <div class="field">
+            <label>Số điện thoại</label>
+            <input type="tel" id="SO_DIEN_THOAI_HKD">
+          </div>
+        </div>
+        <div class="field full">
+          <label>Email <span class="opt">(nhận hợp đồng)</span></label>
+          <input type="email" id="EMAIL_HKD">
+        </div>
+      </div>
+
+      <!-- ===== DOANH NGHIỆP / CÔNG TY ===== -->
+      <div class="type-section" id="section-CONGTY">
+        <div class="field full">
+          <label>Tên công ty</label>
+          <input type="text" id="TEN_CONG_TY" placeholder="CÔNG TY TNHH ...">
+        </div>
+        <div class="grid">
+          <div class="field">
+            <label>Số giấy phép kinh doanh</label>
+            <input type="text" id="SO_GPKD">
+          </div>
+          <div class="field">
+            <label>Sở tài chính tỉnh/thành</label>
+            <input type="text" id="TINH_CAP_GPKD" placeholder="Hồ Chí Minh">
+          </div>
+        </div>
+        <div class="field full">
+          <label>Ngày cấp lần đầu</label>
+          <input type="date" id="NGAY_CAP_GPKD_RAW">
+        </div>
+        <div class="field full">
+          <label>Địa chỉ đăng ký</label>
+          <input type="text" id="DIA_CHI_CONG_TY">
+        </div>
+        <div class="grid">
+          <div class="field">
+            <label>Người đại diện</label>
+            <input type="text" id="NGUOI_DAI_DIEN_CT">
+          </div>
+          <div class="field">
+            <label>Chức vụ</label>
+            <input type="text" id="CHUC_VU_DAI_DIEN_CT" placeholder="Giám đốc">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="num">3</span>Thông tin nhận thanh toán</h2>
+      <div class="grid">
+        <div class="field">
+          <label>Tên tài khoản</label>
+          <input type="text" id="TEN_TK" required>
+        </div>
+        <div class="field">
+          <label>Số tài khoản</label>
+          <input type="text" id="SO_TK" required>
+        </div>
+      </div>
+      <div class="field full">
+        <label>Ngân hàng</label>
+        <input type="text" id="NGAN_HANG" required>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="num">4</span>Thông tin nhận văn bản</h2>
+      <label class="toggle-row">
+        <input type="checkbox" id="sameAsAbove">
+        Dùng giống thông tin ở mục 2
+      </label>
+      <div class="field full">
+        <label>Địa chỉ nhận văn bản</label>
+        <input type="text" id="DIA_CHI_NHAN_VB" required>
+      </div>
+      <div class="field full">
+        <label>Email nhận văn bản <span class="opt" id="emailVbHint"></span></label>
+        <input type="email" id="EMAIL_NHAN_VB" required>
+      </div>
+      <div class="grid">
+        <div class="field">
+          <label>Người nhận</label>
+          <input type="text" id="NGUOI_NHAN_VB" required>
+        </div>
+        <div class="field">
+          <label>Chức vụ</label>
+          <input type="text" id="CHUC_VU_NHAN_VB" required>
+        </div>
+      </div>
+    </div>
+
+    <button type="submit" class="submit-btn" id="submitBtn">Đăng Ký & Nhận Hợp Đồng Qua Email</button>
+  </form>
+
+  <footer>GIVEHADA · H2Y International Trading &amp; Investment JSC</footer>
+</div>
+
+<script>
+// ====== CẤU HÌNH: dán URL Web App sau khi deploy Apps Script ======
+const ENDPOINT_URL = "https://script.google.com/macros/s/AKfycbwHCp_ARYO6q-59duFeNDK0ExUkr7ASr5sIJJ5SccOCR5dYmBAJWaHWgNirYI5hztKBkw/exec";
+// Mốc chính sách dùng để chọn mẫu hợp đồng trước/sau
+const CUTOFF_DATE = "2026-04-01";
+// ===================================================================
+
+let currentType = 'HKD';
+
+const today = new Date();
+document.getElementById('MASTER_NGAY').value = today.getDate();
+document.getElementById('MASTER_THANG').value = today.getMonth() + 1;
+document.getElementById('MASTER_NAM').value = today.getFullYear();
+
+const typeLabels = {CANHAN: 'Cá Nhân', HKD: 'Hộ Kinh Doanh', CONGTY: 'Doanh Nghiệp'};
+document.getElementById('typeBadge').textContent = typeLabels[currentType];
+
+document.querySelectorAll('.type-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.type-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.type-section').forEach(s => s.classList.remove('active'));
+    tab.classList.add('active');
+    currentType = tab.dataset.type;
+    document.getElementById('section-' + currentType).classList.add('active');
+    document.getElementById('typeBadge').textContent = typeLabels[currentType];
+    updateEmailHint();
+  });
+});
+
+function updateEmailHint() {
+  const hint = document.getElementById('emailVbHint');
+  if (currentType === 'CONGTY') {
+    hint.textContent = '(công ty dùng email này để nhận hợp đồng)';
+  } else {
+    hint.textContent = '';
+  }
+}
+updateEmailHint();
+
+document.getElementById('sameAsAbove').addEventListener('change', (e) => {
+  if (!e.target.checked) return;
+  if (currentType === 'CANHAN') {
+    document.getElementById('DIA_CHI_NHAN_VB').value = document.getElementById('DIA_CHI_LIEN_LAC').value;
+    document.getElementById('EMAIL_NHAN_VB').value = document.getElementById('EMAIL_CN').value;
+    document.getElementById('NGUOI_NHAN_VB').value = document.getElementById('HO_TEN').value;
+  } else if (currentType === 'HKD') {
+    document.getElementById('DIA_CHI_NHAN_VB').value = document.getElementById('DIA_CHI_HKD').value;
+    document.getElementById('EMAIL_NHAN_VB').value = document.getElementById('EMAIL_HKD').value;
+    document.getElementById('NGUOI_NHAN_VB').value = document.getElementById('NGUOI_DAI_DIEN_HKD').value;
+  } else if (currentType === 'CONGTY') {
+    document.getElementById('DIA_CHI_NHAN_VB').value = document.getElementById('DIA_CHI_CONG_TY').value;
+    document.getElementById('NGUOI_NHAN_VB').value = document.getElementById('NGUOI_DAI_DIEN_CT').value;
+    document.getElementById('CHUC_VU_NHAN_VB').value = document.getElementById('CHUC_VU_DAI_DIEN_CT').value;
+  }
+});
+
+function showNotice(type, title, msg, downloadInfo) {
+  const el = document.getElementById('notice');
+  el.className = 'notice show ' + type;
+  let html = '<b>' + title + '</b>' + msg;
+  if (downloadInfo) {
+    html += '<div style="margin-top:10px"><button type="button" id="downloadBtn" class="submit-btn" style="padding:11px;font-size:13.5px">Tải Hợp Đồng Về Máy</button></div>';
+  }
+  el.innerHTML = html;
+  el.scrollIntoView({behavior:'smooth', block:'center'});
+  if (downloadInfo) {
+    document.getElementById('downloadBtn').addEventListener('click', () => downloadDocx(downloadInfo.base64, downloadInfo.fileName));
+  }
+}
+
+function downloadDocx(base64, fileName) {
+  const byteChars = atob(base64);
+  const byteNumbers = new Array(byteChars.length);
+  for (let i = 0; i < byteChars.length; i++) byteNumbers[i] = byteChars.charCodeAt(i);
+  const byteArray = new Uint8Array(byteNumbers);
+  const blob = new Blob([byteArray], {type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = fileName || 'hop_dong.docx';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function ddmmyyyy(val) {
+  if (!val) return {d:'', m:'', y:''};
+  const [y, m, d] = val.split('-');
+  return {d: String(Number(d)), m: String(Number(m)), y};
+}
+
+function fieldVal(id) {
+  const el = document.getElementById(id);
+  return el ? el.value.trim() : '';
+}
+
+document.getElementById('contractForm').addEventListener('submit', async function (e) {
+  e.preventDefault();
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Đang xử lý...';
+
+  // Ngày trở thành Master, dùng để chọn mẫu trước/sau 01/04/2026
+  const mN = fieldVal('MASTER_NGAY'), mT = fieldVal('MASTER_THANG'), mY = fieldVal('MASTER_NAM');
+  const masterDate = mY + '-' + String(mT).padStart(2,'0') + '-' + String(mN).padStart(2,'0');
+  const period = masterDate >= CUTOFF_DATE ? 'SAU' : 'TRUOC';
+
+  const data = {
+    LOAI_DOI_TAC: currentType,
+    PERIOD: period,
+    MASTER_NGAY: mN, MASTER_THANG: mT, MASTER_NAM: mY,
+    // Ngày ký hợp đồng = hôm nay
+    NGAY: today.getDate(), THANG: today.getMonth() + 1, NAM: today.getFullYear(),
+    TEN_TK: fieldVal('TEN_TK'), SO_TK: fieldVal('SO_TK'), NGAN_HANG: fieldVal('NGAN_HANG'),
+    DIA_CHI_NHAN_VB: fieldVal('DIA_CHI_NHAN_VB'), EMAIL_NHAN_VB: fieldVal('EMAIL_NHAN_VB'),
+    NGUOI_NHAN_VB: fieldVal('NGUOI_NHAN_VB'), CHUC_VU_NHAN_VB: fieldVal('CHUC_VU_NHAN_VB')
+  };
+
+  let sendToEmail = data.EMAIL_NHAN_VB;
+
+  if (currentType === 'CANHAN') {
+    const capDate = ddmmyyyy(document.getElementById('NGAY_CAP_CCCD_RAW').value);
+    Object.assign(data, {
+      DANH_XUNG: fieldVal('DANH_XUNG'), HO_TEN: fieldVal('HO_TEN'),
+      SO_CCCD: fieldVal('SO_CCCD'), NOI_CAP_CCCD: fieldVal('NOI_CAP_CCCD'),
+      NGAY_CAP_CCCD: capDate.d + '/' + capDate.m + '/' + capDate.y,
+      QUOC_TICH: fieldVal('QUOC_TICH'), DIA_CHI_THUONG_TRU: fieldVal('DIA_CHI_THUONG_TRU'),
+      DIA_CHI_LIEN_LAC: fieldVal('DIA_CHI_LIEN_LAC'), SO_DIEN_THOAI_CN: fieldVal('SO_DIEN_THOAI_CN'),
+      EMAIL_CN: fieldVal('EMAIL_CN')
+    });
+    sendToEmail = data.EMAIL_CN || data.EMAIL_NHAN_VB;
+  } else if (currentType === 'HKD') {
+    const capDate = ddmmyyyy(document.getElementById('NGAY_CAP_HKD_RAW').value);
+    Object.assign(data, {
+      TEN_HKD: fieldVal('TEN_HKD'), SO_GCN_HKD: fieldVal('SO_GCN_HKD'),
+      NOI_CAP_HKD: fieldVal('NOI_CAP_HKD'),
+      NGAY_CAP_HKD: capDate.d + '/' + capDate.m + '/' + capDate.y,
+      DIA_CHI_HKD: fieldVal('DIA_CHI_HKD'), NGUOI_DAI_DIEN_HKD: fieldVal('NGUOI_DAI_DIEN_HKD'),
+      SO_DIEN_THOAI_HKD: fieldVal('SO_DIEN_THOAI_HKD'), EMAIL_HKD: fieldVal('EMAIL_HKD')
+    });
+    sendToEmail = data.EMAIL_HKD || data.EMAIL_NHAN_VB;
+  } else if (currentType === 'CONGTY') {
+    const capDate = ddmmyyyy(document.getElementById('NGAY_CAP_GPKD_RAW').value);
+    Object.assign(data, {
+      TEN_CONG_TY: fieldVal('TEN_CONG_TY'), SO_GPKD: fieldVal('SO_GPKD'),
+      TINH_CAP_GPKD: fieldVal('TINH_CAP_GPKD'),
+      NGAY_CAP_GPKD: capDate.d, THANG_CAP_GPKD: capDate.m, NAM_CAP_GPKD: capDate.y,
+      DIA_CHI_CONG_TY: fieldVal('DIA_CHI_CONG_TY'), NGUOI_DAI_DIEN_CT: fieldVal('NGUOI_DAI_DIEN_CT'),
+      CHUC_VU_DAI_DIEN_CT: fieldVal('CHUC_VU_DAI_DIEN_CT')
+    });
+    sendToEmail = data.EMAIL_NHAN_VB; // công ty không có field email riêng trong hợp đồng
+  }
+  data.EMAIL_GUI = sendToEmail;
+
+  if (ENDPOINT_URL.includes('PASTE_')) {
+    showNotice('err', 'Chưa cấu hình hệ thống', 'Cần dán URL Web App của Apps Script vào biến ENDPOINT_URL trong file này.');
+    btn.disabled = false;
+    btn.textContent = 'Đăng Ký & Nhận Hợp Đồng Qua Email';
+    return;
+  }
+
+  try {
+    const res = await fetch(ENDPOINT_URL, {
+      method: 'POST',
+      headers: {'Content-Type': 'text/plain;charset=utf-8'},
+      body: JSON.stringify(data)
+    });
+    const result = await res.json();
+    if (result.success) {
+      showNotice('ok', 'Đăng ký thành công, số hợp đồng ' + result.so_hd,
+        'Hợp đồng đã được gửi tới email ' + sendToEmail + ' (mẫu ' + (period === 'SAU' ? 'sau' : 'trước') + ' 01/04/2026), anh/chị cũng có thể tải file về máy ngay bên dưới.',
+        {base64: result.file_base64, fileName: result.file_name});
+      downloadDocx(result.file_base64, result.file_name);
+      this.reset();
+      document.getElementById('MASTER_NGAY').value = today.getDate();
+      document.getElementById('MASTER_THANG').value = today.getMonth() + 1;
+      document.getElementById('MASTER_NAM').value = today.getFullYear();
+    } else {
+      showNotice('err', 'Có lỗi xảy ra', result.message || 'Vui lòng thử lại hoặc liên hệ đội ngũ GIVEHADA.');
+    }
+  } catch (err) {
+    showNotice('err', 'Không gửi được dữ liệu', 'Kiểm tra kết nối mạng và thử lại. Chi tiết: ' + err.message);
+  }
+  btn.disabled = false;
+  btn.textContent = 'Đăng Ký & Nhận Hợp Đồng Qua Email';
+});
+</script>
+</body>
+</html>
