@@ -369,6 +369,25 @@ const CUTOFF_DATE = "2026-04-01";
 
 let currentType = 'HKD';
 
+const TYPE_REQUIRED_FIELDS = {
+  CANHAN: ['HO_TEN', 'SO_CCCD', 'NGAY_CAP_CCCD_RAW', 'NOI_CAP_CCCD', 'QUOC_TICH',
+    'DIA_CHI_THUONG_TRU', 'DIA_CHI_LIEN_LAC', 'SO_DIEN_THOAI_CN', 'EMAIL_CN'],
+  HKD: ['TEN_HKD', 'SO_GCN_HKD', 'NGAY_CAP_HKD_RAW', 'NOI_CAP_HKD', 'DIA_CHI_HKD',
+    'NGUOI_DAI_DIEN_HKD', 'SO_DIEN_THOAI_HKD', 'EMAIL_HKD'],
+  CONGTY: ['TEN_CONG_TY', 'SO_GPKD', 'TINH_CAP_GPKD', 'NGAY_CAP_GPKD_RAW',
+    'DIA_CHI_CONG_TY', 'NGUOI_DAI_DIEN_CT', 'CHUC_VU_DAI_DIEN_CT']
+};
+
+function applyRequiredForActiveType() {
+  Object.keys(TYPE_REQUIRED_FIELDS).forEach(function (type) {
+    const isActive = type === currentType;
+    TYPE_REQUIRED_FIELDS[type].forEach(function (id) {
+      const el = document.getElementById(id);
+      if (el) el.required = isActive;
+    });
+  });
+}
+
 const today = new Date();
 document.getElementById('MASTER_NGAY').value = today.getDate();
 document.getElementById('MASTER_THANG').value = today.getMonth() + 1;
@@ -386,6 +405,7 @@ document.querySelectorAll('.type-tab').forEach(tab => {
     document.getElementById('section-' + currentType).classList.add('active');
     document.getElementById('typeBadge').textContent = typeLabels[currentType];
     updateEmailHint();
+    applyRequiredForActiveType();
   });
 });
 
@@ -398,6 +418,7 @@ function updateEmailHint() {
   }
 }
 updateEmailHint();
+applyRequiredForActiveType();
 
 document.getElementById('sameAsAbove').addEventListener('change', (e) => {
   if (!e.target.checked) return;
